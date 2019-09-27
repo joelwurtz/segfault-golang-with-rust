@@ -13,13 +13,17 @@ import (
 )
 
 func main() {
-	html := "<html><head><title>yolo</title><meta property=\"og:title\" content=\"yolo\" /></head>"
-	htmlCstr := C.CString(html)
+	localNameNotSegfault := "html"
+	localNameSegfault := "segfault"
+
+	localNameNotSegfaultCstr := C.CString(localNameNotSegfault)
+	localNameSegfaultCstr := C.CString(localNameSegfault)
 
 	// Uncommenting the next line will remove the segfault
 	//C.html5ever_parse_data(htmlCstr)
 	signalChannel := make(chan os.Signal)
 	signal.Notify(signalChannel, syscall.SIGTERM)
 
-	C.html5ever_parse_data(htmlCstr)
+	C.api_do_segfault(localNameNotSegfaultCstr)
+	C.api_do_segfault(localNameSegfaultCstr)
 }
