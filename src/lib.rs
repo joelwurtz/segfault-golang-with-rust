@@ -29,7 +29,7 @@ fn cstr_to_str(data_cstr: *const libc::c_char) -> String {
 }
 
 fn do_segfault(data: &str) {
-    LocalName::from(&*data);
+    LocalName::from(data);
 
     println!("It works with {}", data);
 }
