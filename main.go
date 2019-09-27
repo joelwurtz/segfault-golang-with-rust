@@ -13,12 +13,13 @@ import (
 )
 
 func main() {
-	// Commenting it out this next two lines does not make a segfault
-	signalChannel := make(chan os.Signal)
-	signal.Notify(signalChannel, syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP)
-
 	html := "<html><head><title>yolo</title><meta property=\"og:title\" content=\"yolo\" /></head>"
 	htmlCstr := C.CString(html)
+
+	// Uncommenting the next line will remove the segfault
+	//C.html5ever_parse_data(htmlCstr)
+	signalChannel := make(chan os.Signal)
+	signal.Notify(signalChannel, syscall.SIGTERM)
 
 	C.html5ever_parse_data(htmlCstr)
 }
